@@ -1,5 +1,7 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Entity;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,15 @@ using System.Threading.Tasks;
 namespace Business.Concrete
 {
     public class InstructorService : IInstructorService
-    {private readonly IInstructorService _service;
+    {
+        private readonly IInstructorRepository _instructorRepository;
+        private readonly IMapper _mapper;
+        public InstructorService(IInstructorRepository instructorRepository, IMapper mapper)
+        {
+            _instructorRepository = instructorRepository;
+            _mapper = mapper;
+
+        }
         public void Add(Instructor entity)
         {
             _service.Add(entity);
