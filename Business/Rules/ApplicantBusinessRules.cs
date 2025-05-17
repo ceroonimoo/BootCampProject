@@ -18,11 +18,28 @@ namespace Business.Rules
             _applicantRepository = applicantRepository;
         }
 
-        public void CheckIfTCNoIsUnique(string TC)
+        public void CheckIfTCNoIsUnique(string Tc)
         {
-            var existingApplicant = _applicantRepository.Get(b => b.Name == name);
+            var existingApplicant = _applicantRepository.Get(b => b.TC == Tc);
             if (existingApplicant != null)
-                throw new BusinessException($"{TC} Aynı tc numaralı biri mevcut");
+                throw new BusinessException($"{Tc} tc numaralı biri mevcut");
         }
+        public void CheckIfApplicantExists(string Tc)
+        {
+            var applicant = _applicantRepository.Get(a => a.TC == Tc);
+            if (applicant == null)
+                throw new BusinessException($"{Tc} numaralı başvuru sahibi sistemde kayıtlı değil.");
+        }
+        public void CheckIfApplicantIsBlacklisted(string Tc)
+        {
+            var applicant = _applicantRepository.Get(a => a.TC == Tc);
+
+            if (applicant == null)
+                throw new BusinessException($"{Tc} numaralı başvuru sahibi sistemde kayıtlı değil.");
+
+            if (applicant.IsBlacklisted)
+                throw new BusinessException($"{Tc} numaralı başvuru sahibi kara listededir. Başvuru yapamaz.");
+        }
+
     }
 }
