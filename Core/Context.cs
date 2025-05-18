@@ -10,6 +10,8 @@ namespace Core
         public DbSet<User> Users { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Applicant> Applicants { get; set; }
+        public DbSet<Blacklist> Blacklists { get; set; }
+
 
     }
 }
